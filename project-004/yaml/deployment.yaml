@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project004
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: project004
+  template:
+    metadata:
+      labels:
+        app: project004
+    spec:
+      containers:
+        - name: project004
+          image: sidartasilva/project004
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 5701
+          - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: project004
+spec:
+  type: LoadBalancer
+  selector:
+    app: project004
+  ports:
+  - name: hazelcast
+    port: 5701
+  - name: app
+    port: 8080
